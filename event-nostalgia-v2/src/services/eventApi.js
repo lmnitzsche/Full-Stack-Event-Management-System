@@ -3,18 +3,42 @@ const TICKETMASTER_API_BASE = 'https://app.ticketmaster.com/discovery/v2'
 const API_KEY = import.meta.env.VITE_TICKETMASTER_API_KEY
 
 export class TicketmasterAPI {
-  static async searchEvents(query, location = '', size = 20, page = 0) {
+  static async searchEvents(query, location = '', size = 20, page = 0, additionalParams = {}) {
     try {
       const params = new URLSearchParams({
         apikey: API_KEY,
-        keyword: query,
         size: size.toString(),
         page: page.toString(),
-        sort: 'relevance,desc'
+        sort: additionalParams.sort || 'date,desc' // Default to newest first
       })
       
-      if (location) {
-        params.append('city', location)
+      // Add keyword if provided
+      if (query && query.trim()) {
+        params.append('keyword', query.trim())
+      }
+      
+      // Add location if provided
+      if (location && location.trim()) {
+        params.append('city', location.trim())
+      }
+      
+      // Add date range for historical search
+      if (additionalParams.startDateTime) {
+        params.append('startDateTime', additionalParams.startDateTime)
+      } else {
+        // Default to search from 20 years ago to allow historical events
+        const twentyYearsAgo = new Date()
+        twentyYearsAgo.setFullYear(twentyYearsAgo.getFullYear() - 20)
+        params.append('startDateTime', twentyYearsAgo.toISOString())
+      }
+      
+      if (additionalParams.endDateTime) {
+        params.append('endDateTime', additionalParams.endDateTime)
+      }
+      
+      // Add category filter
+      if (additionalParams.classificationName) {
+        params.append('classificationName', additionalParams.classificationName)
       }
       
       const response = await fetch(`${TICKETMASTER_API_BASE}/events.json?${params}`)

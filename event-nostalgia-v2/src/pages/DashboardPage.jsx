@@ -3,13 +3,15 @@ import { supabase } from '../services/supabase'
 import { useAuth } from '../contexts/AuthContext-clean'
 import LoadingSpinner from '../components/LoadingSpinner'
 import toast from 'react-hot-toast'
-import { Plus, Calendar, Star, User } from 'lucide-react'
+import { Plus, Calendar, Star, User, Edit3, Check, X, ArrowUpDown } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 export default function DashboardPage() {
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
   const [profileLoading, setProfileLoading] = useState(false)
+  const [sortBy, setSortBy] = useState('date-desc') // 'date-desc', 'date-asc', 'rating-desc', 'rating-asc', 'name-asc'
+  const [editingRating, setEditingRating] = useState(null)
   const { user, profile, supabaseAvailable, signOut } = useAuth()
 
   useEffect(() => {
@@ -19,6 +21,11 @@ export default function DashboardPage() {
       setLoading(false)
     }
   }, [user, supabaseAvailable])
+
+  // Re-sort events when sort option changes
+  useEffect(() => {
+    fetchUserEvents()
+  }, [sortBy])
 
   const initializeDashboard = async () => {
     try {
@@ -72,14 +79,71 @@ export default function DashboardPage() {
         .from('events')
         .select('*')
         .eq('user_id', user.id)
-        .order('date', { ascending: false })
 
       if (error) throw error
-      setEvents(data || [])
+      
+      // Sort events based on current sort option
+      const sortedEvents = sortEvents(data || [], sortBy)
+      setEvents(sortedEvents)
     } catch (error) {
       console.error('Error fetching events:', error)
       toast.error('Failed to load your events')
       setEvents([])
+    }
+  }
+
+  const sortEvents = (eventsArray, sortOption) => {
+    const sorted = [...eventsArray]
+    
+    switch (sortOption) {
+      case 'date-desc':
+        return sorted.sort((a, b) => new Date(b.date) - new Date(a.date))
+      case 'date-asc':
+        return sorted.sort((a, b) => new Date(a.date) - new Date(b.date))
+      case 'rating-desc':
+        return sorted.sort((a, b) => (b.rating || 1) - (a.rating || 1))
+      case 'rating-asc':
+        return sorted.sort((a, b) => (a.rating || 1) - (b.rating || 1))
+      case 'name-asc':
+        return sorted.sort((a, b) => a.name.localeCompare(b.name))
+      default:
+        return sorted
+    }
+  }
+
+  const handleSortChange = (newSortBy) => {
+    setSortBy(newSortBy)
+    setEvents(prevEvents => sortEvents(prevEvents, newSortBy))
+  }
+
+  const updateEventRating = async (eventId, newRating) => {
+    if (!supabaseAvailable) {
+      toast.error('Database not available')
+      return
+    }
+
+    try {
+      const { error } = await supabase
+        .from('events')
+        .update({ rating: newRating })
+        .eq('id', eventId)
+
+      if (error) throw error
+
+      // Update local state
+      setEvents(prevEvents => 
+        prevEvents.map(event => 
+          event.id === eventId 
+            ? { ...event, rating: newRating }
+            : event
+        )
+      )
+
+      toast.success('Rating updated!')
+      setEditingRating(null)
+    } catch (error) {
+      console.error('Error updating rating:', error)
+      toast.error('Failed to update rating')
     }
   }
 
@@ -134,7 +198,7 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold glow-text">
-                Welcome back, {profile?.full_name || user.email?.split('@')[0]}!
+                Welcome back, {profile?.full_name || user?.user_metadata?.full_name || user.email?.split('@')[0]}!
               </h1>
               <p className="text-white/70 mt-2">
                 Manage your saved events and memories
@@ -177,8 +241,8 @@ export default function DashboardPage() {
                 <h3 className="text-lg font-semibold">Average Rating</h3>
                 <p className="text-2xl font-bold text-yellow-400">
                   {events.length > 0 
-                    ? (events.reduce((sum, event) => sum + parseFloat(event.rating || 0), 0) / events.length).toFixed(1)
-                    : '0.0'
+                    ? (events.reduce((sum, event) => sum + parseFloat(event.rating || 1), 0) / events.length).toFixed(1)
+                    : '1.0'
                   }
                 </p>
               </div>
@@ -200,13 +264,31 @@ export default function DashboardPage() {
 
         {/* Events List */}
         <div className="glass-card p-6">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 space-y-4 sm:space-y-0">
             <h2 className="text-2xl font-bold">Your Events</h2>
-            {!supabaseAvailable && (
-              <div className="text-sm text-orange-300 bg-orange-500/20 px-3 py-1 rounded-lg">
-                Demo Mode - Database not available
-              </div>
-            )}
+            <div className="flex items-center space-x-4">
+              {events.length > 0 && (
+                <div className="flex items-center space-x-2">
+                  <ArrowUpDown size={16} className="text-white/50" />
+                  <select
+                    value={sortBy}
+                    onChange={(e) => handleSortChange(e.target.value)}
+                    className="bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  >
+                    <option value="date-desc" className="bg-slate-800">Newest First</option>
+                    <option value="date-asc" className="bg-slate-800">Oldest First</option>
+                    <option value="rating-desc" className="bg-slate-800">Highest Rated</option>
+                    <option value="rating-asc" className="bg-slate-800">Lowest Rated</option>
+                    <option value="name-asc" className="bg-slate-800">Name (A-Z)</option>
+                  </select>
+                </div>
+              )}
+              {!supabaseAvailable && (
+                <div className="text-sm text-orange-300 bg-orange-500/20 px-3 py-1 rounded-lg">
+                  Demo Mode - Database not available
+                </div>
+              )}
+            </div>
           </div>
 
           {events.length === 0 ? (
@@ -231,14 +313,68 @@ export default function DashboardPage() {
                   <h3 className="font-bold text-lg mb-2">{event.name}</h3>
                   <p className="text-white/70 mb-2">{event.venue}</p>
                   <p className="text-white/70 mb-2">{new Date(event.date).toLocaleDateString()}</p>
+                  {event.description && (
+                    <p className="text-white/60 text-sm mb-3 line-clamp-2">{event.description}</p>
+                  )}
+                  
                   <div className="flex items-center justify-between mt-4">
-                    <div className="flex items-center space-x-1">
+                    {/* Editable Rating */}
+                    <div className="flex items-center space-x-2">
                       <Star size={16} className="text-yellow-400" />
-                      <span className="text-yellow-400">{event.rating}/10</span>
+                      {editingRating === event.id ? (
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="number"
+                            min="1"
+                            max="10"
+                            step="0.1"
+                            defaultValue={event.rating || 1}
+                            className="w-16 px-2 py-1 text-sm bg-white/10 border border-white/20 rounded text-white focus:outline-none focus:ring-1 focus:ring-purple-500"
+                            onKeyPress={(e) => {
+                              if (e.key === 'Enter') {
+                                const value = parseFloat(e.target.value)
+                                if (value >= 1 && value <= 10) {
+                                  updateEventRating(event.id, value)
+                                }
+                              }
+                              if (e.key === 'Escape') {
+                                setEditingRating(null)
+                              }
+                            }}
+                            autoFocus
+                            onBlur={(e) => {
+                              const value = parseFloat(e.target.value)
+                              if (value >= 1 && value <= 10) {
+                                updateEventRating(event.id, value)
+                              } else {
+                                setEditingRating(null)
+                              }
+                            }}
+                          />
+                          <button
+                            onClick={() => setEditingRating(null)}
+                            className="text-white/50 hover:text-white"
+                          >
+                            <X size={14} />
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex items-center space-x-1">
+                          <span className="text-yellow-400">{event.rating || 1}/10</span>
+                          <button
+                            onClick={() => setEditingRating(event.id)}
+                            className="text-white/50 hover:text-white ml-2"
+                          >
+                            <Edit3 size={14} />
+                          </button>
+                        </div>
+                      )}
                     </div>
+                    
                     <button
                       onClick={() => deleteEvent(event.id)}
                       className="text-red-400 hover:text-red-300 text-sm transition-colors"
+                      disabled={editingRating === event.id}
                     >
                       Delete
                     </button>

@@ -10,7 +10,7 @@ export default function HomePage() {
     {
       icon: <Search className="w-8 h-8 text-blue-400" />,
       title: "Discover Real Events",
-      description: "Search through thousands of real events using the Ticketmaster API. Find concerts, sports events, theater shows, and more."
+      description: "Search through millions of real events using the Ticketmaster API. Find concerts, sports events, theater shows, and more."
     },
     {
       icon: <Calendar className="w-8 h-8 text-purple-400" />,
@@ -154,7 +154,7 @@ export default function HomePage() {
           Built with React, Supabase, and the Ticketmaster Discovery API
         </p>
         <p className="text-white/40 text-xs">
-          © 2024 Event Nostalgia. Made with ❤️ by Logan Nitzsche
+          © {new Date().getFullYear()} Event Nostalgia. Made with ❤️ by Logan Nitzsche
         </p>
       </footer>
     </div>

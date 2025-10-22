@@ -105,8 +105,8 @@ export default function EventCard({ event, onRate, onDelete, showActions = true,
                   defaultValue=""
                 >
                   <option value="" disabled>Rate 1-10</option>
-                  {[...Array(100)].map((_, i) => {
-                    const rating = (i + 1) / 10
+                  {[...Array(90)].map((_, i) => {
+                    const rating = (i + 10) / 10 // Start at 1.0 instead of 0.1
                     return (
                       <option key={rating} value={rating} className="bg-slate-800">
                         {rating.toFixed(1)}

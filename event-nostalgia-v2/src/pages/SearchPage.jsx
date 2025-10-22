@@ -156,7 +156,7 @@ export default function SearchPage() {
           <span className="text-white/70 font-medium">Popular Cities:</span>
         </div>
         <div className="flex flex-wrap gap-2">
-          {['Los Angeles, CA', 'New York, NY', 'Boston, MA', 'Chicago, IL', 'St. Louis, MO', 'Cincinnati, OH', 'Tampa, FL', 'Austin, TX'].map((city) => (
+          {['Los Angeles, CA', 'New York, NY', 'Boston, MA', 'Chicago, IL', 'St. Louis, MO', 'Cincinnati, OH', 'Tampa, FL', 'Austin, TX', 'Houston, TX', 'Nashville, TN'].map((city) => (
             <button
               key={city}
               onClick={() => handleSearch({ query: '', location: city, category: '' })}
