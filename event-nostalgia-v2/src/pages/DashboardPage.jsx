@@ -55,7 +55,7 @@ export default function DashboardPage() {
         throw error
       }
       
-      toast.success('Profile created successfully!')
+      // Profile created silently - no need to notify user
     } catch (error) {
       console.error('Error creating profile:', error)
       toast.error('Profile creation failed, but you can still use the app')

@@ -6,7 +6,7 @@ import SearchBar from '../components/SearchBar'
 import EventCard from '../components/EventCard'
 import LoadingSpinner from '../components/LoadingSpinner'
 import toast from 'react-hot-toast'
-import { ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react'
+import { ChevronLeft, ChevronRight, AlertCircle, MapPin } from 'lucide-react'
 
 export default function SearchPage() {
   const [searchResults, setSearchResults] = useState([])
@@ -148,6 +148,26 @@ export default function SearchPage() {
       )}
 
       <SearchBar onSearch={handleSearch} loading={loading} />
+
+      {/* City Suggestions */}
+      <div className="glass-card p-4">
+        <div className="flex items-center space-x-3 mb-3">
+          <MapPin size={18} className="text-white/50" />
+          <span className="text-white/70 font-medium">Popular Cities:</span>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {['Los Angeles, CA', 'New York, NY', 'Boston, MA', 'Chicago, IL', 'St. Louis, MO', 'Cincinnati, OH', 'Tampa, FL', 'Austin, TX'].map((city) => (
+            <button
+              key={city}
+              onClick={() => handleSearch({ query: '', location: city, category: '' })}
+              className="px-3 py-1.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full text-sm text-white/80 hover:text-white transition-colors"
+              disabled={loading}
+            >
+              {city}
+            </button>
+          ))}
+        </div>
+      </div>
 
       {loading && <LoadingSpinner />}
 
