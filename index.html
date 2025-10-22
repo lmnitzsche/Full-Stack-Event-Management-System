@@ -1,83 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Past Events</title>
-    <link rel="icon" href="images/lmn.png" type="image/png">
-    <link rel="apple-touch-icon" href="images/lmn.png">
-    <link href="bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="main/styles.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4880288893316569" crossorigin="anonymous"></script>
-</head>
-<body>
-    <br><br>
-    <div class="w3-container">
-        <a href="https://www.linkedin.com/in/logan-nitzsche"><i class="bi bi-linkedin"></i></a>
-        <a href="https://github.com/lmnitzsche"><i class="bi bi-github"></i></a>
-        <h1 class="glow"><b>Event No<a class="glow" href="snake/snake.html">s</a>talgia</b></h1>
-        <form id="eventForm">
-            <h3><u>Input Event</u></h3>
-            <label for="eventName">Name:</label>
-            <input type="text" id="eventName" name="eventName" required>
-            <br>
-            <br>
-            <label for="eventVenue">Venue:</label>
-            <input type="text" id="eventVenue" name="eventVenue">
-            <br>
-            <br>
-            <label for="eventDate">Date:</label>
-            <input type="date" id="eventDate" name="eventDate" required>
-            <br>
-            <br>
-            <label for="eventRating">Rating (1-10):</label>
-            <input type="number" id="eventRating" name="eventRating" step=".1" min="1" max="10" required>
-            <br>
-            <br>
-            <label for="eventLabel">Group by: </label>
-            <select id="eventLabel">
-                <option value="none">None</option>
-                <option value="concerts">Concerts</option>
-            </select>
-            <br>
-            <br>
-            <label for="eventDescription">Additional Details:</label>
-            <textarea id="eventDescription" name="eventDescription" rows="1"></textarea>
-            <br>
-            <br>
-            <button type="submit">Add Event</button>
-        </form>
-        <div class="container">
-            <div class="box">
-                <label for="sortSelect">Sort By:</label>
-                <select id="sortSelect">
-                    <option value="latest">Date (Descending)</option>
-                    <option value="last">Date (Ascending)</option>
-                    <option value="rating">Rating (Descending)</option>
-                    <option value="ratingTwo">Rating (Ascending)</option>
-                </select>
-                <h2 class="glow">All Past Events:</h2>
-                <ul id="eventList"></ul>
-            </div>
-            <div class="box">
-                <label for="sortSelectTwo">Sort By:</label>
-                <select id="sortSelectTwo">
-                    <option value="latestTwo">Date (Descending)</option>
-                    <option value="lastTwo">Date (Ascending)</option>
-                    <option value="ratingSecond">Rating (Descending)</option>
-                    <option value="ratingTwoSecond">Rating (Ascending)</option>
-                </select>
-                <h2 class="glow">Past Concerts:</h2>
-                <ul id="concertList"></ul>
-            </div>
-        </div> 
-        <br><br><br><br><br><br><br><br><br><br><br>
-    </div>
-    <script src="main/app.js"></script>
-</body>
-<footer>
-    <div class="copyright">
-        <p> &copy; 2025 <a href="https://logannitzsche.com">Logan Nitzsche</a>. All Rights Reserved. <a href="main/privacyPolicy.html">Privacy Policy</a>. <a href="main/tos.html">Terms of Service</a>.</p>
-    </div>
-</footer>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Nostalgia - Relive Your Memories</title>
+    <meta name="description" content="Discover, track, and rate the events and concerts you've attended. Create your personal archive of memorable experiences." />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
