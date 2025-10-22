@@ -128,7 +128,7 @@ export default function SearchPage() {
       <div className="text-center space-y-4">
         <h1 className="text-4xl font-bold text-white">Discover Events</h1>
         <p className="text-white/70 max-w-2xl mx-auto">
-          Search through thousands of real events and add the ones you've attended to your collection.
+          Search through millions of real events and add the ones you've attended to your collection.
         </p>
       </div>
 
