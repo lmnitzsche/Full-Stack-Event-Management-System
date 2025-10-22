@@ -49,7 +49,7 @@ function AppWithFreshStart() {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter basename="/event-tracker-crud">
+    <BrowserRouter basename="/Full-Stack-Event-Management-System">
       <AuthProvider>
         <AppWithFreshStart />
       </AuthProvider>

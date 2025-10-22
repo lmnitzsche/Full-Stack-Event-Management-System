@@ -6,7 +6,7 @@ Event Nostalgia is a modern, production-ready web application that enables users
 
 ## Live Application
 
-**Production URL:** https://logannitzsche.com/event-tracker-crud/
+**Production URL:** https://logannitzsche.com/Full-Stack-Event-Management-System/
 
 ## Core Features
 
@@ -95,8 +95,8 @@ Event Nostalgia is a modern, production-ready web application that enables users
 
 **1. Repository Setup**
 ```bash
-git clone https://github.com/lmnitzsche/event-tracker-crud.git
-cd event-tracker-crud
+git clone https://github.com/lmnitzsche/Full-Stack-Event-Management-System.git
+cd Full-Stack-Event-Management-System
 npm install
 ```
 
@@ -268,4 +268,4 @@ src/
 
 **Contact:** [LinkedIn](https://linkedin.com/in/logan-nitzsche) | [GitHub](https://github.com/lmnitzsche)
 
-**Live Application:** https://logannitzsche.com/event-tracker-crud/
+**Live Application:** https://logannitzsche.com/Full-Stack-Event-Management-System/
