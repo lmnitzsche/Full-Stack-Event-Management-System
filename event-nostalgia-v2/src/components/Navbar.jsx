@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext-fixed'
+import { useAuth } from '../contexts/AuthContext-clean'
 import { Github, Linkedin, User, LogOut, Settings, Search, Home } from 'lucide-react'
 
 export default function Navbar() {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext-fixed'
+import { useAuth } from '../contexts/AuthContext-clean'
 import { Calendar, Star, Search, Shield, Github, Linkedin } from 'lucide-react'
 
 export default function HomePage() {

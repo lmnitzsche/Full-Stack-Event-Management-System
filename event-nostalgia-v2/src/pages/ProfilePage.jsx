@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useAuth } from '../contexts/AuthContext-fixed'
+import { useAuth } from '../contexts/AuthContext-clean'
 import toast from 'react-hot-toast'
 import { User, Mail, Save } from 'lucide-react'
 

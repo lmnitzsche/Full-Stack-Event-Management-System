@@ -25,23 +25,19 @@ export function AuthProvider({ children }) {
 
   const initializeSupabase = async () => {
     try {
-      // Test Supabase connection
       const { data, error } = await supabase.auth.getSession()
       
       if (error) throw error
       
       setSupabaseAvailable(true)
       
-      // Set initial user
       if (data.session?.user) {
         setUser(data.session.user)
         await fetchProfile(data.session.user.id)
       }
       
-      // Listen for auth changes
       const { data: { subscription } } = supabase.auth.onAuthStateChange(
         async (event, session) => {
-          console.log('Auth event:', event)
           setUser(session?.user ?? null)
           
           if (session?.user) {
@@ -75,17 +71,15 @@ export function AuthProvider({ children }) {
 
       if (error) {
         if (error.code === 'PGRST116') {
-          // No profile found, create one
           await createProfile(userId)
         } else {
-          throw error
+          console.error('Profile fetch error:', error)
         }
       } else {
         setProfile(data)
       }
     } catch (error) {
       console.error('Error fetching profile:', error)
-      // Try to create profile as fallback
       await createProfile(userId)
     }
   }
@@ -107,33 +101,30 @@ export function AuthProvider({ children }) {
         .single()
 
       if (error) {
-        if (error.code !== '23505') { // Ignore duplicate key errors
+        if (error.code === '23505') {
+          // Duplicate key, fetch existing
+          const { data: existingData } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', userId)
+            .single()
+          
+          if (existingData) setProfile(existingData)
+        } else {
           throw error
-        }
-        // If duplicate, try to fetch the existing profile
-        const { data: existingData } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', userId)
-          .single()
-        
-        if (existingData) {
-          setProfile(existingData)
         }
       } else {
         setProfile(data)
-        toast.success('Profile created successfully!')
       }
     } catch (error) {
       console.error('Error creating profile:', error)
-      toast.error('Profile creation failed, but you can still use the app')
+      // Don't show error toast, just continue
     }
   }
 
   const signUp = async (email, password, fullName) => {
     if (!supabaseAvailable) {
-      toast.error('Database not available')
-      return { data: null, error: { message: 'Supabase not available' } }
+      return { data: null, error: { message: 'Database not available' } }
     }
     
     try {
@@ -148,22 +139,15 @@ export function AuthProvider({ children }) {
       })
 
       if (error) throw error
-      
-      if (data.user && !data.session) {
-        toast.success('Check your email for the confirmation link!')
-      }
-      
       return { data, error: null }
     } catch (error) {
-      console.error('Sign up error:', error)
       return { data: null, error }
     }
   }
 
   const signIn = async (email, password) => {
     if (!supabaseAvailable) {
-      toast.error('Database not available')
-      return { data: null, error: { message: 'Supabase not available' } }
+      return { data: null, error: { message: 'Database not available' } }
     }
     
     try {
@@ -175,7 +159,6 @@ export function AuthProvider({ children }) {
       if (error) throw error
       return { data, error: null }
     } catch (error) {
-      console.error('Sign in error:', error)
       return { data: null, error }
     }
   }
@@ -183,25 +166,18 @@ export function AuthProvider({ children }) {
   const signOut = async () => {
     try {
       if (supabaseAvailable) {
-        const { error } = await supabase.auth.signOut()
-        if (error) throw error
+        await supabase.auth.signOut()
       }
       
-      // Clear state regardless
       setUser(null)
       setProfile(null)
-      
-      // Clear local storage
       localStorage.clear()
       sessionStorage.clear()
       
-      toast.success('Logged out successfully')
-      
-      // Force page refresh to ensure clean state
+      // Force refresh to ensure clean state
       window.location.href = '/Event-Nostalgia/'
       
     } catch (error) {
-      console.error('Sign out error:', error)
       // Force logout anyway
       setUser(null)
       setProfile(null)
@@ -213,7 +189,6 @@ export function AuthProvider({ children }) {
 
   const updateProfile = async (updates) => {
     if (!supabaseAvailable || !user) {
-      toast.error('Cannot update profile - not authenticated')
       return { error: { message: 'Not authenticated' } }
     }
     
@@ -228,11 +203,9 @@ export function AuthProvider({ children }) {
       if (error) throw error
       
       setProfile(data)
-      toast.success('Profile updated successfully!')
       return { data, error: null }
     } catch (error) {
       console.error('Error updating profile:', error)
-      toast.error('Failed to update profile')
       return { data: null, error }
     }
   }
