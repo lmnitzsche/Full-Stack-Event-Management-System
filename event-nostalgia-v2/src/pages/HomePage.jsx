@@ -20,7 +20,7 @@ export default function HomePage() {
     {
       icon: <Star className="w-8 h-8 text-yellow-400" />,
       title: "Rate & Remember",
-      description: "Rate your experiences from 1-10 and add personal notes. Sort your events by rating or date to relive your favorites."
+      description: "Rate your experiences from 1-10 and build your personal event history. Sort by rating, date, or category to relive your favorites."
     },
     {
       icon: <Shield className="w-8 h-8 text-green-400" />,
@@ -41,8 +41,8 @@ export default function HomePage() {
           talgia
         </h1>
         <p className="text-xl md:text-2xl text-white/70 max-w-3xl mx-auto leading-relaxed">
-          Relive and share your favorite past events and concerts. Discover real events, 
-          rate your experiences, and create a personalized archive of your memories.
+          Relive your concert memories and discover new events to attend. Search past shows for nostalgia, 
+          upcoming events to plan, and build your personal archive of musical experiences.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

@@ -10,7 +10,8 @@
 
 @layer components {
   .glow-text {
-    @apply animate-glow font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400;
+    @apply font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-300;
+    text-shadow: 0 0 10px rgba(147, 197, 253, 0.2);
   }
   
   .glass-card {
