@@ -1,7 +1,7 @@
 import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
-import { useAuth } from './contexts/AuthContext-robust'
+import { useAuth } from './contexts/AuthContext-fixed'
 import Navbar from './components/Navbar'
 import LoadingSpinner from './components/LoadingSpinner'
 import HomePage from './pages/HomePage'

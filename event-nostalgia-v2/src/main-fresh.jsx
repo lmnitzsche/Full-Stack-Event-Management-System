@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
-import { AuthProvider } from './contexts/AuthContext-robust.jsx'
+import { AuthProvider } from './contexts/AuthContext-fixed.jsx'
 import { supabase } from './services/supabase.js'
 import LoginPage from './pages/LoginPage.jsx'
 import './index.css'

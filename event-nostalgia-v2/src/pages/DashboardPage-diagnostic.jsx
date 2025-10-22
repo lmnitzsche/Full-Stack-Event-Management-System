@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useAuth } from '../contexts/AuthContext-robust'
+import { useAuth } from '../contexts/AuthContext-fixed'
 import LoadingSpinner from '../components/LoadingSpinner'
 
 export default function DashboardPage() {

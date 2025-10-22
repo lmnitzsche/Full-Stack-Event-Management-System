@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { supabase } from '../services/supabase'
-import { useAuth } from '../contexts/AuthContext-robust'
+import { useAuth } from '../contexts/AuthContext-fixed'
 import LoadingSpinner from '../components/LoadingSpinner'
 import toast from 'react-hot-toast'
 import { Plus, Calendar, Star, User } from 'lucide-react'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAuth } from './contexts/AuthContext-robust'
+import { useAuth } from './contexts/AuthContext-fixed'
 
 // Test the robust AuthContext
 function MinimalApp() {

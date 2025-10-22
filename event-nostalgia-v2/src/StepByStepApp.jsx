@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { useAuth } from './contexts/AuthContext-robust'
+import { useAuth } from './contexts/AuthContext-fixed'
 
 // Import components one by one for testing
 import HomePage from './pages/HomePage'

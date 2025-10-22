@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
-import { AuthProvider } from './contexts/AuthContext-robust.jsx'
-import { useAuth } from './contexts/AuthContext-robust.jsx'
+import { AuthProvider } from './contexts/AuthContext-fixed.jsx'
+import { useAuth } from './contexts/AuthContext-fixed.jsx'
 import './index.css'
 
 function AuthTestComponent() {
