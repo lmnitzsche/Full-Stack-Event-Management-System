@@ -29,7 +29,9 @@ export class TicketmasterAPI {
         // Default to search from 20 years ago to allow historical events
         const twentyYearsAgo = new Date()
         twentyYearsAgo.setFullYear(twentyYearsAgo.getFullYear() - 20)
-        params.append('startDateTime', twentyYearsAgo.toISOString())
+        // Format without milliseconds: YYYY-MM-DDTHH:mm:ssZ (Ticketmaster requirement)
+        const formattedDate = twentyYearsAgo.toISOString().split('.')[0] + 'Z'
+        params.append('startDateTime', formattedDate)
       }
       
       if (additionalParams.endDateTime) {
