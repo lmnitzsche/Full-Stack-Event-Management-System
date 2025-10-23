@@ -37,7 +37,7 @@ export default function SearchPage() {
         const response = await TicketmasterAPI.searchEvents(
           searchParams.query,
           searchParams.location,
-          20,
+          21,
           page
         )
         
