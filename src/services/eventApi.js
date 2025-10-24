@@ -129,10 +129,10 @@ export class TicketmasterAPI {
       'Music': 'concert',
       'Sports': 'sports',
       'Arts & Theatre': 'theater',
-      'Film': 'other',
-      'Miscellaneous': 'other'
+      'Film': 'theater', // Map Film to theater instead of other
+      'Miscellaneous': 'concert' // Map Miscellaneous to concert instead of other
     }
-    return categoryMap[segmentName] || 'other'
+    return categoryMap[segmentName] || 'concert' // Default to concert instead of other
   }
 }
 
