@@ -95,6 +95,7 @@ export function AuthProvider({ children }) {
             id: userId,
             email: user.email,
             full_name: user.user_metadata?.full_name || user.email.split('@')[0],
+            created_at: new Date().toISOString()
           }
         ])
         .select()
@@ -214,6 +215,7 @@ export function AuthProvider({ children }) {
       if (error) throw error
       
       setProfile(data)
+      
       return { data, error: null }
     } catch (error) {
       console.error('Error updating profile:', error)

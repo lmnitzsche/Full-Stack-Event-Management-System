@@ -16,6 +16,7 @@ export default function SearchPage() {
   const [totalResults, setTotalResults] = useState(0)
   const [lastSearchParams, setLastSearchParams] = useState(null)
   const [useApiKey, setUseApiKey] = useState(false)
+  const [savedEvents, setSavedEvents] = useState(new Set())
   const { user } = useAuth()
 
   // Check if API key is available
@@ -23,6 +24,29 @@ export default function SearchPage() {
     const apiKey = import.meta.env.VITE_TICKETMASTER_API_KEY
     setUseApiKey(apiKey && apiKey !== 'your_ticketmaster_api_key_here')
   }, [])
+
+  // Load user's saved events to track which ones are already saved
+  useEffect(() => {
+    if (user) {
+      loadSavedEvents()
+    }
+  }, [user])
+
+  const loadSavedEvents = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('events')
+        .select('event_id')
+        .eq('user_id', user.id)
+
+      if (error) throw error
+
+      const savedEventIds = new Set(data.map(event => event.event_id))
+      setSavedEvents(savedEventIds)
+    } catch (error) {
+      console.error('Error loading saved events:', error)
+    }
+  }
 
   const handleSearch = async (searchParams, page = 0) => {
     setLoading(true)
@@ -40,6 +64,11 @@ export default function SearchPage() {
         if (searchParams.category) {
           additionalParams.classificationName = searchParams.category
         }
+
+        // Only show events from today onwards
+        const today = new Date()
+        const todayISO = today.toISOString().split('.')[0] + 'Z'
+        additionalParams.startDateTime = todayISO
         
         const response = await TicketmasterAPI.searchEvents(
           searchParams.query,
@@ -52,7 +81,13 @@ export default function SearchPage() {
         results = {
           events: response.events
             .map(event => TicketmasterAPI.transformEvent(event))
-            .filter(event => event.url && event.url.trim() !== ''), // Filter out events without URLs
+            .filter(event => {
+              // Filter out events without URLs and past events
+              const hasUrl = event.url && event.url.trim() !== ''
+              const eventDate = new Date(event.date)
+              const isUpcoming = eventDate >= today
+              return hasUrl && isUpcoming
+            }),
           totalPages: response.totalPages,
           totalElements: response.totalElements
         }
@@ -126,6 +161,8 @@ export default function SearchPage() {
 
       if (error) throw error
 
+      // Update saved events state
+      setSavedEvents(prev => new Set([...prev, event.id]))
       toast.success('Event saved to your dashboard!')
     } catch (error) {
       console.error('Error adding event:', error)
@@ -227,6 +264,7 @@ export default function SearchPage() {
                 event={event}
                 onRate={handleAddEvent}
                 showActions={true}
+                isSaved={savedEvents.has(event.id)}
               />
             ))}
           </div>

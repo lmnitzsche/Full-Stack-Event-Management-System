@@ -1,8 +1,8 @@
 import React from 'react'
-import { Star, Calendar, MapPin, ExternalLink } from 'lucide-react'
+import { Star, Calendar, MapPin, ExternalLink, Check } from 'lucide-react'
 import { format } from 'date-fns'
 
-export default function EventCard({ event, onRate, onDelete, showActions = true, userRating }) {
+export default function EventCard({ event, onRate, onDelete, showActions = true, userRating, isSaved = false }) {
   const formatDate = (dateString) => {
     try {
       return format(new Date(dateString), 'MMM d, yyyy')
@@ -100,13 +100,23 @@ export default function EventCard({ event, onRate, onDelete, showActions = true,
         {showActions && (
           <div className="flex items-center justify-between pt-4">
             {onRate && (
-              <button
-                onClick={() => onRate(event)}
-                className="btn-primary px-4 py-2 text-sm flex items-center space-x-2"
-              >
-                <Calendar size={16} />
-                <span>Save to Dashboard</span>
-              </button>
+              isSaved ? (
+                <button
+                  disabled
+                  className="bg-green-600 text-white px-4 py-2 text-sm flex items-center space-x-2 rounded-lg cursor-not-allowed opacity-80"
+                >
+                  <Check size={16} />
+                  <span>Saved</span>
+                </button>
+              ) : (
+                <button
+                  onClick={() => onRate(event)}
+                  className="btn-primary px-4 py-2 text-sm flex items-center space-x-2"
+                >
+                  <Calendar size={16} />
+                  <span>Save to Dashboard</span>
+                </button>
+              )
             )}
             
             {onDelete && (
