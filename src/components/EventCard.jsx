@@ -17,6 +17,9 @@ export default function EventCard({ event, onRate, onDelete, showActions = true,
       festival: 'bg-pink-500/20 text-pink-300 border-pink-500/30',
       sports: 'bg-green-500/20 text-green-300 border-green-500/30',
       theater: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
+      film: 'bg-red-500/20 text-red-300 border-red-500/30',
+      comedy: 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30',
+      family: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
       other: 'bg-gray-500/20 text-gray-300 border-gray-500/30'
     }
     return colors[category] || colors.other

@@ -129,10 +129,12 @@ export class TicketmasterAPI {
       'Music': 'concert',
       'Sports': 'sports',
       'Arts & Theatre': 'theater',
-      'Film': 'theater', // Map Film to theater instead of other
-      'Miscellaneous': 'concert' // Map Miscellaneous to concert instead of other
+      'Film': 'film',
+      'Comedy': 'comedy',
+      'Family': 'family',
+      'Miscellaneous': 'concert' // Map Miscellaneous to concert as fallback
     }
-    return categoryMap[segmentName] || 'concert' // Default to concert instead of other
+    return categoryMap[segmentName] || 'concert' // Default to concert for unknown categories
   }
 }
 

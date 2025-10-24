@@ -52,6 +52,9 @@ export default function SearchBar({ onSearch, loading = false }) {
               <option value="Music" className="bg-slate-800">Music</option>
               <option value="Sports" className="bg-slate-800">Sports</option>
               <option value="Arts & Theatre" className="bg-slate-800">Theatre</option>
+              <option value="Film" className="bg-slate-800">Film</option>
+              <option value="Comedy" className="bg-slate-800">Comedy</option>
+              <option value="Family" className="bg-slate-800">Family</option>
             </select>
           </div>
         </div>
