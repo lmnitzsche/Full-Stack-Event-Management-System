@@ -296,7 +296,7 @@ export default function DashboardPage() {
               <Calendar size={64} className="mx-auto text-white/30 mb-4" />
               <h3 className="text-xl font-semibold mb-2">No events yet</h3>
               <p className="text-white/70 mb-4">
-                Start building your event collection by searching for concerts and events!
+                Start planning your next adventure by searching for upcoming events!
               </p>
               <Link
                 to="/search"

@@ -2,7 +2,7 @@
 
 **Full-Stack Event Management Application with Real-Time API Integration**
 
-Event Nostalgia is a modern, production-ready web application that enables users to discover, track, and rate live events. Built with React and Supabase, it demonstrates enterprise-level full-stack development practices including secure authentication, database design, external API integration, and automated deployment.
+Event Nostalgia is a modern, production-ready web application that enables users to discover and plan upcoming events they want to attend. Built with React and Supabase, it demonstrates enterprise-level full-stack development practices including secure authentication, database design, external API integration, and automated deployment.
 
 ## Live Application
 
@@ -12,9 +12,9 @@ Event Nostalgia is a modern, production-ready web application that enables users
 
 **Event Discovery & Management**
 - Real-time event search integration with Ticketmaster Discovery API
-- Personal event collection with CRUD operations
+- Personal event planning collection with CRUD operations
 - Advanced filtering and sorting capabilities
-- Rating system with data persistence
+- Save upcoming events you plan to attend
 
 **User Management System**
 - Secure user authentication and authorization
