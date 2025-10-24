@@ -139,6 +139,17 @@ export function AuthProvider({ children }) {
       })
 
       if (error) throw error
+
+      // Check if the signup was successful but user already exists
+      // Supabase returns the user object even for existing users, but with different properties
+      if (data.user && data.user.identities && data.user.identities.length === 0) {
+        // User exists but no new identity was created (email already registered)
+        return { 
+          data: null, 
+          error: { message: 'An account with this email already exists. Please use a different email or try logging in.' } 
+        }
+      }
+
       return { data, error: null }
     } catch (error) {
       return { data: null, error }
