@@ -34,11 +34,19 @@ export default function SearchPage() {
       
       if (useApiKey) {
         // Use real Ticketmaster API
+        const additionalParams = {}
+        
+        // Map category to Ticketmaster classificationName
+        if (searchParams.category) {
+          additionalParams.classificationName = searchParams.category
+        }
+        
         const response = await TicketmasterAPI.searchEvents(
           searchParams.query,
           searchParams.location,
           21,
-          page
+          page,
+          additionalParams
         )
         
         results = {
