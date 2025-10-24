@@ -106,7 +106,7 @@ export default function SearchPage() {
     }
   }
 
-  const handleAddEvent = async (event, rating) => {
+  const handleAddEvent = async (event) => {
     try {
       const eventData = {
         user_id: user.id,
@@ -115,7 +115,7 @@ export default function SearchPage() {
         venue: event.venue,
         date: event.date,
         description: `${event.genre ? `Genre: ${event.genre}` : ''}${event.city ? ` • Location: ${event.city}` : ''}${event.state ? `, ${event.state}` : ''}`,
-        rating: rating,
+        rating: 5, // Default rating for saved events
         category: event.category || 'other',
         api_data: event.apiData || event
       }
@@ -126,13 +126,13 @@ export default function SearchPage() {
 
       if (error) throw error
 
-      toast.success('Event added to your collection!')
+      toast.success('Event saved to your dashboard!')
     } catch (error) {
       console.error('Error adding event:', error)
       if (error.code === '23505') {
-        toast.error('You have already added this event to your collection.')
+        toast.error('You have already saved this event.')
       } else {
-        toast.error('Failed to add event. Please try again.')
+        toast.error('Failed to save event. Please try again.')
       }
     }
   }

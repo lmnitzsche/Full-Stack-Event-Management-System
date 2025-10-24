@@ -100,24 +100,13 @@ export default function EventCard({ event, onRate, onDelete, showActions = true,
         {showActions && (
           <div className="flex items-center justify-between pt-4">
             {onRate && (
-              <div className="flex items-center space-x-2">
-                <span className="text-sm text-white/70">Rate:</span>
-                <select 
-                  onChange={(e) => onRate(event, parseFloat(e.target.value))}
-                  className="bg-white/10 border border-white/20 rounded px-2 py-1 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  defaultValue=""
-                >
-                  <option value="" disabled>Rate 1-10</option>
-                  {[...Array(90)].map((_, i) => {
-                    const rating = (i + 10) / 10 // Start at 1.0 instead of 0.1
-                    return (
-                      <option key={rating} value={rating} className="bg-slate-800">
-                        {rating.toFixed(1)}
-                      </option>
-                    )
-                  })}
-                </select>
-              </div>
+              <button
+                onClick={() => onRate(event)}
+                className="btn-primary px-4 py-2 text-sm flex items-center space-x-2"
+              >
+                <Calendar size={16} />
+                <span>Save to Dashboard</span>
+              </button>
             )}
             
             {onDelete && (

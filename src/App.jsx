@@ -11,6 +11,7 @@ import DashboardPage from './pages/DashboardPage'
 import SearchPage from './pages/SearchPage'
 import AdminPage from './pages/AdminPage'
 import ProfilePage from './pages/ProfilePage'
+import EventDetailsPage from './pages/EventDetailsPage'
 import SnakeGame from './components/SnakeGame'
 
 function App() {
@@ -49,6 +50,10 @@ function App() {
           <Route 
             path="/admin" 
             element={user ? <AdminPage /> : <Navigate to="/login" />} 
+          />
+          <Route 
+            path="/event/:eventId" 
+            element={user ? <EventDetailsPage /> : <Navigate to="/login" />} 
           />
           <Route path="/snake" element={<SnakeGame />} />
         </Routes>

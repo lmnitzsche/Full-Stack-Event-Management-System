@@ -3,16 +3,16 @@ import { supabase } from '../services/supabase'
 import { useAuth } from '../contexts/AuthContext-clean'
 import LoadingSpinner from '../components/LoadingSpinner'
 import toast from 'react-hot-toast'
-import { Plus, Calendar, Star, User, Edit3, Check, X, ArrowUpDown } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Plus, Calendar, Clock, TrendingUp, User, Edit3, Check, X, ArrowUpDown } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function DashboardPage() {
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
   const [profileLoading, setProfileLoading] = useState(false)
-  const [sortBy, setSortBy] = useState('date-desc') // 'date-desc', 'date-asc', 'rating-desc', 'rating-asc', 'name-asc'
-  const [editingRating, setEditingRating] = useState(null)
+  const [sortBy, setSortBy] = useState('date-desc') // 'date-desc', 'date-asc', 'name-asc'
   const { user, profile, supabaseAvailable, signOut } = useAuth()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (user && supabaseAvailable) {
@@ -100,10 +100,6 @@ export default function DashboardPage() {
         return sorted.sort((a, b) => new Date(b.date) - new Date(a.date))
       case 'date-asc':
         return sorted.sort((a, b) => new Date(a.date) - new Date(b.date))
-      case 'rating-desc':
-        return sorted.sort((a, b) => (b.rating || 1) - (a.rating || 1))
-      case 'rating-asc':
-        return sorted.sort((a, b) => (a.rating || 1) - (b.rating || 1))
       case 'name-asc':
         return sorted.sort((a, b) => a.name.localeCompare(b.name))
       default:
@@ -114,37 +110,6 @@ export default function DashboardPage() {
   const handleSortChange = (newSortBy) => {
     setSortBy(newSortBy)
     setEvents(prevEvents => sortEvents(prevEvents, newSortBy))
-  }
-
-  const updateEventRating = async (eventId, newRating) => {
-    if (!supabaseAvailable) {
-      toast.error('Database not available')
-      return
-    }
-
-    try {
-      const { error } = await supabase
-        .from('events')
-        .update({ rating: newRating })
-        .eq('id', eventId)
-
-      if (error) throw error
-
-      // Update local state
-      setEvents(prevEvents => 
-        prevEvents.map(event => 
-          event.id === eventId 
-            ? { ...event, rating: newRating }
-            : event
-        )
-      )
-
-      toast.success('Rating updated!')
-      setEditingRating(null)
-    } catch (error) {
-      console.error('Error updating rating:', error)
-      toast.error('Failed to update rating')
-    }
   }
 
   const deleteEvent = async (eventId) => {
@@ -236,14 +201,11 @@ export default function DashboardPage() {
           
           <div className="glass-card p-6">
             <div className="flex items-center space-x-3">
-              <Star className="text-yellow-400" size={24} />
+              <Clock className="text-purple-400" size={24} />
               <div>
-                <h3 className="text-lg font-semibold">Average Rating</h3>
-                <p className="text-2xl font-bold text-yellow-400">
-                  {events.length > 0 
-                    ? (events.reduce((sum, event) => sum + parseFloat(event.rating || 1), 0) / events.length).toFixed(1)
-                    : '1.0'
-                  }
+                <h3 className="text-lg font-semibold">Upcoming Events</h3>
+                <p className="text-2xl font-bold text-purple-400">
+                  {events.filter(event => new Date(event.date) >= new Date()).length}
                 </p>
               </div>
             </div>
@@ -251,11 +213,15 @@ export default function DashboardPage() {
           
           <div className="glass-card p-6">
             <div className="flex items-center space-x-3">
-              <User className="text-green-400" size={24} />
+              <TrendingUp className="text-green-400" size={24} />
               <div>
-                <h3 className="text-lg font-semibold">Account Status</h3>
+                <h3 className="text-lg font-semibold">This Month</h3>
                 <p className="text-2xl font-bold text-green-400">
-                  {supabaseAvailable ? 'Connected' : 'Demo Mode'}
+                  {events.filter(event => {
+                    const eventDate = new Date(event.date)
+                    const now = new Date()
+                    return eventDate.getMonth() === now.getMonth() && eventDate.getFullYear() === now.getFullYear()
+                  }).length}
                 </p>
               </div>
             </div>
@@ -277,8 +243,6 @@ export default function DashboardPage() {
                   >
                     <option value="date-desc" className="bg-slate-800">Newest First</option>
                     <option value="date-asc" className="bg-slate-800">Oldest First</option>
-                    <option value="rating-desc" className="bg-slate-800">Highest Rated</option>
-                    <option value="rating-asc" className="bg-slate-800">Lowest Rated</option>
                     <option value="name-asc" className="bg-slate-800">Name (A-Z)</option>
                   </select>
                 </div>
@@ -309,7 +273,11 @@ export default function DashboardPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {events.map((event) => (
-                <div key={event.id} className="glass-card p-4 hover:bg-white/5 transition-colors">
+                <div 
+                  key={event.id} 
+                  className="glass-card p-4 hover:bg-white/5 transition-colors cursor-pointer"
+                  onClick={() => navigate(`/event/${event.id}`)}
+                >
                   <h3 className="font-bold text-lg mb-2">{event.name}</h3>
                   <p className="text-white/70 mb-2">{event.venue}</p>
                   <p className="text-white/70 mb-2">{new Date(event.date).toLocaleDateString()}</p>
@@ -318,63 +286,17 @@ export default function DashboardPage() {
                   )}
                   
                   <div className="flex items-center justify-between mt-4">
-                    {/* Editable Rating */}
                     <div className="flex items-center space-x-2">
-                      <Star size={16} className="text-yellow-400" />
-                      {editingRating === event.id ? (
-                        <div className="flex items-center space-x-2">
-                          <input
-                            type="number"
-                            min="1"
-                            max="10"
-                            step="0.1"
-                            defaultValue={event.rating || 1}
-                            className="w-16 px-2 py-1 text-sm bg-white/10 border border-white/20 rounded text-white focus:outline-none focus:ring-1 focus:ring-purple-500"
-                            onKeyPress={(e) => {
-                              if (e.key === 'Enter') {
-                                const value = parseFloat(e.target.value)
-                                if (value >= 1 && value <= 10) {
-                                  updateEventRating(event.id, value)
-                                }
-                              }
-                              if (e.key === 'Escape') {
-                                setEditingRating(null)
-                              }
-                            }}
-                            autoFocus
-                            onBlur={(e) => {
-                              const value = parseFloat(e.target.value)
-                              if (value >= 1 && value <= 10) {
-                                updateEventRating(event.id, value)
-                              } else {
-                                setEditingRating(null)
-                              }
-                            }}
-                          />
-                          <button
-                            onClick={() => setEditingRating(null)}
-                            className="text-white/50 hover:text-white"
-                          >
-                            <X size={14} />
-                          </button>
-                        </div>
-                      ) : (
-                        <div className="flex items-center space-x-1">
-                          <span className="text-yellow-400">{event.rating || 1}/10</span>
-                          <button
-                            onClick={() => setEditingRating(event.id)}
-                            className="text-white/50 hover:text-white ml-2"
-                          >
-                            <Edit3 size={14} />
-                          </button>
-                        </div>
-                      )}
+                      <Calendar size={16} className="text-blue-400" />
+                      <span className="text-blue-400 text-sm">Saved Event</span>
                     </div>
                     
                     <button
-                      onClick={() => deleteEvent(event.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteEvent(event.id);
+                      }}
                       className="text-red-400 hover:text-red-300 text-sm transition-colors"
-                      disabled={editingRating === event.id}
                     >
                       Delete
                     </button>
