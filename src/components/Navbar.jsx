@@ -15,9 +15,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
             <h1 className="text-2xl font-bold glow-text">
-              Event No
-              <Link to="/snake" className="hover:animate-pulse">s</Link>
-              talgia
+              Ticket Padawan
             </h1>
           </Link>
 

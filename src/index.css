@@ -5,24 +5,63 @@
 @layer base {
   body {
     @apply bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white min-h-screen;
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
   }
 }
 
 @layer components {
   .glow-text {
     @apply font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-purple-300;
-    text-shadow: 0 0 10px rgba(147, 197, 253, 0.2);
+    text-shadow: 
+      0 0 10px rgba(147, 197, 253, 0.4),
+      0 0 20px rgba(147, 197, 253, 0.3),
+      0 0 30px rgba(147, 197, 253, 0.2);
+    animation: pulse-glow 3s ease-in-out infinite alternate;
   }
   
   .glass-card {
     @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-xl;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
   
   .btn-primary {
     @apply bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg;
+    box-shadow: 
+      0 4px 15px rgba(59, 130, 246, 0.3),
+      0 0 20px rgba(59, 130, 246, 0.2);
   }
   
   .btn-secondary {
     @apply bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 backdrop-blur-sm;
+  }
+
+  /* Star Wars inspired animations */
+  @keyframes pulse-glow {
+    0% { 
+      text-shadow: 
+        0 0 10px rgba(147, 197, 253, 0.4),
+        0 0 20px rgba(147, 197, 253, 0.3),
+        0 0 30px rgba(147, 197, 253, 0.2);
+    }
+    100% { 
+      text-shadow: 
+        0 0 15px rgba(147, 197, 253, 0.6),
+        0 0 25px rgba(147, 197, 253, 0.4),
+        0 0 35px rgba(147, 197, 253, 0.3);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .float-animation {
+    animation: float 6s ease-in-out infinite;
   }
 }

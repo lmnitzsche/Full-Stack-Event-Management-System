@@ -58,8 +58,8 @@ export default function SignUpPage() {
     <div className="max-w-md mx-auto">
       <div className="glass-card p-8 space-y-6">
         <div className="text-center space-y-2">
-          <h1 className="text-3xl font-bold text-white">Join Event Nostalgia</h1>
-          <p className="text-white/70">Create your account to start tracking events</p>
+          <h1 className="text-3xl font-bold text-white">Join Ticket Padawan</h1>
+          <p className="text-white/70">Begin your journey to event planning mastery</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">

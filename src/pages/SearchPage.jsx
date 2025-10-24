@@ -177,9 +177,9 @@ export default function SearchPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-8">
       <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold text-white">Discover Upcoming Events</h1>
+        <h1 className="text-4xl font-bold text-white">Discover the Galaxy of Events</h1>
         <p className="text-white/70 max-w-2xl mx-auto">
-          Find events you want to attend and add them to your collection to keep track of your plans.
+          Use the Force to find events across the galaxy. Add them to your collection to continue your journey toward mastery.
         </p>
       </div>
 

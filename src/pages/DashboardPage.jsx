@@ -163,10 +163,10 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold glow-text">
-                Welcome back, {profile?.full_name || user?.user_metadata?.full_name || user.email?.split('@')[0]}!
+                Welcome back, Padawan {profile?.full_name || user?.user_metadata?.full_name || user.email?.split('@')[0]}!
               </h1>
               <p className="text-white/70 mt-2">
-                Manage your upcoming events and plans
+                Continue your journey to event planning mastery
               </p>
             </div>
             <div className="flex items-center space-x-4">
@@ -258,16 +258,16 @@ export default function DashboardPage() {
           {events.length === 0 ? (
             <div className="text-center py-12">
               <Calendar size={64} className="mx-auto text-white/30 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">No events yet</h3>
+              <h3 className="text-xl font-semibold mb-2">Your journey begins now</h3>
               <p className="text-white/70 mb-4">
-                Start planning your next adventure by searching for upcoming events!
+                Every master was once a beginner. Start discovering upcoming events to build your collection!
               </p>
               <Link
                 to="/search"
                 className="bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-lg inline-flex items-center space-x-2 transition-colors"
               >
                 <Plus size={20} />
-                <span>Find Events</span>
+                <span>Begin Your Quest</span>
               </Link>
             </div>
           ) : (

@@ -9,40 +9,36 @@ export default function HomePage() {
   const features = [
     {
       icon: <Search className="w-8 h-8 text-blue-400" />,
-      title: "Discover Real Events",
-      description: "Search through millions of real events using the Ticketmaster API. Find concerts, sports events, theater shows, and more."
+      title: "Discover the Galaxy",
+      description: "Use the Force to search through millions of events across the galaxy using the Ticketmaster API. Find concerts, sports events, theater shows, and more."
     },
     {
       icon: <Calendar className="w-8 h-8 text-purple-400" />,
-      title: "Plan Your Attendance",
-      description: "Save upcoming events you want to attend to your personal collection. Never miss out on the events you're excited about."
+      title: "Plan Your Journey",
+      description: "A Padawan must plan ahead. Save upcoming events you want to attend and build your personal collection of future adventures."
     },
     {
       icon: <Star className="w-8 h-8 text-yellow-400" />,
-      title: "Save & Organize",
-      description: "Organize your planned events by category, date, or personal notes. Keep track of what you're looking forward to attending."
+      title: "Master Organization",
+      description: "Organize your planned events by category, date, or personal notes. Track your path to event planning mastery."
     },
     {
       icon: <Shield className="w-8 h-8 text-green-400" />,
-      title: "Secure & Private",
-      description: "Your data is stored securely with Supabase. Only you can see your events and ratings unless you choose to share."
+      title: "Secure & Protected",
+      description: "Your data is protected by the strongest encryption this side of the galaxy. Only you can access your event collection."
     }
   ]
 
   return (
     <div className="max-w-6xl mx-auto space-y-16">
       {/* Hero Section */}
-      <div className="text-center space-y-8 py-16">
+      <div className="text-center space-y-8 py-16 float-animation">
         <h1 className="text-5xl md:text-7xl font-bold glow-text">
-          Event No
-          <Link to="/snake" className="hover:animate-pulse inline-block">
-            s
-          </Link>
-          talgia
+          Ticket Padawan
         </h1>
         <p className="text-xl md:text-2xl text-white/70 max-w-3xl mx-auto leading-relaxed">
-          Discover upcoming events and keep track of what you plan to attend. Search for concerts, sports, 
-          theater shows and more, then save them to your personal collection to never miss out.
+          Master your event planning journey. Discover upcoming events and track what you plan to attend. 
+          Search for concerts, sports, theater shows and more, then save them to build your personal event collection.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -88,16 +84,16 @@ export default function HomePage() {
       {/* How it Works */}
       <div className="glass-card p-8 space-y-6">
         <h2 className="text-3xl font-bold text-center text-white mb-8">
-          How It Works
+          Your Path to Mastery
         </h2>
         <div className="grid md:grid-cols-3 gap-8">
           <div className="text-center space-y-4">
             <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto text-white font-bold text-xl">
               1
             </div>
-            <h3 className="text-xl font-semibold text-white">Search Real Events</h3>
+            <h3 className="text-xl font-semibold text-white">Search the Galaxy</h3>
             <p className="text-white/70">
-              Use our search to find upcoming concerts, sports events, theater shows, and festivals from the Ticketmaster database.
+              Use your powers to find upcoming concerts, sports events, theater shows, and festivals from across the galaxy.
             </p>
           </div>
           
@@ -105,9 +101,9 @@ export default function HomePage() {
             <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto text-white font-bold text-xl">
               2
             </div>
-            <h3 className="text-xl font-semibold text-white">Save Your Plans</h3>
+            <h3 className="text-xl font-semibold text-white">Build Your Collection</h3>
             <p className="text-white/70">
-              Save events you want to attend to your personal collection with notes and reminders.
+              Save events to your personal holocron with notes and reminders for your future adventures.
             </p>
           </div>
           
@@ -115,18 +111,18 @@ export default function HomePage() {
             <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto text-white font-bold text-xl">
               3
             </div>
-            <h3 className="text-xl font-semibold text-white">Track & Organize</h3>
+            <h3 className="text-xl font-semibold text-white">Achieve Mastery</h3>
             <p className="text-white/70">
-              Organize your planned events, set reminders, and keep track of what you're looking forward to attending.
+              Organize and track your planned events. With time and practice, you'll become a true Event Master.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Easter Egg Hint */}
+      {/* Call to Action */}
       <div className="glass-card p-6 text-center">
         <p className="text-white/60 text-sm">
-          💡 Hint: Click the 'S' in "Event Nostalgia" for a fun surprise! 🐍
+          🌟 May the force be with your event planning journey! 🌟
         </p>
       </div>
 
@@ -154,7 +150,7 @@ export default function HomePage() {
           Built with React, Supabase, and the Ticketmaster Discovery API
         </p>
         <p className="text-white/40 text-xs">
-          © {new Date().getFullYear()} Event Nostalgia. Made with ❤️ by Logan Nitzsche
+          © {new Date().getFullYear()} Ticket Padawan. Made with ❤️ by Logan Nitzsche
         </p>
       </footer>
     </div>

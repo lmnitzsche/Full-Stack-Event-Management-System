@@ -37,7 +37,7 @@ export default function LoginPage() {
       <div className="glass-card p-8 space-y-6">
         <div className="text-center space-y-2">
           <h1 className="text-3xl font-bold text-white">Welcome Back</h1>
-          <p className="text-white/70">Sign in to your Event Nostalgia account</p>
+          <p className="text-white/70">Sign in to your Ticket Padawan account</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
