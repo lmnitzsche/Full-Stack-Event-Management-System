@@ -14,13 +14,13 @@ export default function HomePage() {
     },
     {
       icon: <Calendar className="w-8 h-8 text-purple-400" />,
-      title: "Track Your Experiences",
-      description: "Add events you've attended to your personal collection. Keep track of all the amazing experiences you've had."
+      title: "Plan Your Attendance",
+      description: "Save upcoming events you want to attend to your personal collection. Never miss out on the events you're excited about."
     },
     {
       icon: <Star className="w-8 h-8 text-yellow-400" />,
-      title: "Rate & Remember",
-      description: "Rate your experiences from 1-10 and build your personal event history. Sort by rating, date, or category to relive your favorites."
+      title: "Save & Organize",
+      description: "Organize your planned events by category, date, or personal notes. Keep track of what you're looking forward to attending."
     },
     {
       icon: <Shield className="w-8 h-8 text-green-400" />,
@@ -41,8 +41,8 @@ export default function HomePage() {
           talgia
         </h1>
         <p className="text-xl md:text-2xl text-white/70 max-w-3xl mx-auto leading-relaxed">
-          Relive your concert memories and discover new events to attend. Search past shows for nostalgia, 
-          upcoming events to plan, and build your personal archive of musical experiences.
+          Discover upcoming events and keep track of what you plan to attend. Search for concerts, sports, 
+          theater shows and more, then save them to your personal collection to never miss out.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -97,7 +97,7 @@ export default function HomePage() {
             </div>
             <h3 className="text-xl font-semibold text-white">Search Real Events</h3>
             <p className="text-white/70">
-              Use our search to find concerts, sports events, theater shows, and festivals from the Ticketmaster database.
+              Use our search to find upcoming concerts, sports events, theater shows, and festivals from the Ticketmaster database.
             </p>
           </div>
           
@@ -105,9 +105,9 @@ export default function HomePage() {
             <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto text-white font-bold text-xl">
               2
             </div>
-            <h3 className="text-xl font-semibold text-white">Add to Collection</h3>
+            <h3 className="text-xl font-semibold text-white">Save Your Plans</h3>
             <p className="text-white/70">
-              Add events you've attended to your personal collection with details about your experience.
+              Save events you want to attend to your personal collection with notes and reminders.
             </p>
           </div>
           
@@ -115,9 +115,9 @@ export default function HomePage() {
             <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto text-white font-bold text-xl">
               3
             </div>
-            <h3 className="text-xl font-semibold text-white">Rate & Relive</h3>
+            <h3 className="text-xl font-semibold text-white">Track & Organize</h3>
             <p className="text-white/70">
-              Rate your experiences, add notes, and sort your collection to easily find your favorite memories.
+              Organize your planned events, set reminders, and keep track of what you're looking forward to attending.
             </p>
           </div>
         </div>

@@ -140,9 +140,9 @@ export default function SearchPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-8">
       <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold text-white">Discover Events</h1>
+        <h1 className="text-4xl font-bold text-white">Discover Upcoming Events</h1>
         <p className="text-white/70 max-w-2xl mx-auto">
-          Search through millions of real events and add the ones you've attended to your collection.
+          Find events you want to attend and add them to your collection to keep track of your plans.
         </p>
       </div>
 

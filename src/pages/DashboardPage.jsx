@@ -201,7 +201,7 @@ export default function DashboardPage() {
                 Welcome back, {profile?.full_name || user?.user_metadata?.full_name || user.email?.split('@')[0]}!
               </h1>
               <p className="text-white/70 mt-2">
-                Manage your saved events and memories
+                Manage your upcoming events and plans
               </p>
             </div>
             <div className="flex items-center space-x-4">

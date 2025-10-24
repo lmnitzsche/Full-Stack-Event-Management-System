@@ -9,7 +9,7 @@ export class TicketmasterAPI {
         apikey: API_KEY,
         size: size.toString(),
         page: page.toString(),
-        sort: additionalParams.sort || 'date,desc' // Default to newest first
+        sort: additionalParams.sort || 'date,asc' // Default to soonest first
       })
       
       // Add keyword if provided
@@ -149,38 +149,4 @@ export class EventbriteAPI {
 }
 
 // Mock data for development/fallback
-export const mockEvents = [
-  {
-    id: 'mock-1',
-    name: 'Summer Music Festival 2024',
-    date: '2024-07-15',
-    venue: 'Central Park',
-    city: 'New York',
-    state: 'NY',
-    category: 'festival',
-    genre: 'Rock',
-    image: 'https://via.placeholder.com/640x360?text=Summer+Music+Festival'
-  },
-  {
-    id: 'mock-2',
-    name: 'Broadway Show - Hamilton',
-    date: '2024-08-20',
-    venue: 'Richard Rodgers Theatre',
-    city: 'New York',
-    state: 'NY',
-    category: 'theater',
-    genre: 'Musical',
-    image: 'https://via.placeholder.com/640x360?text=Hamilton'
-  },
-  {
-    id: 'mock-3',
-    name: 'NBA Finals Game 7',
-    date: '2024-06-18',
-    venue: 'Madison Square Garden',
-    city: 'New York',
-    state: 'NY',
-    category: 'sports',
-    genre: 'Basketball',
-    image: 'https://via.placeholder.com/640x360?text=NBA+Finals'
-  }
-]
+export const mockEvents = []
