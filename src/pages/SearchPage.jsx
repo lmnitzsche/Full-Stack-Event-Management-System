@@ -17,6 +17,7 @@ export default function SearchPage() {
   const [lastSearchParams, setLastSearchParams] = useState(null)
   const [useApiKey, setUseApiKey] = useState(false)
   const [savedEvents, setSavedEvents] = useState(new Set())
+  const [apiStatus, setApiStatus] = useState('working') // 'working', 'rate-limited', 'error'
   const { user } = useAuth()
 
   // Check if API key is available
@@ -113,18 +114,35 @@ export default function SearchPage() {
       setSearchResults(results.events)
       setTotalPages(results.totalPages)
       setTotalResults(results.totalElements)
+      setApiStatus('working') // Reset status on successful search
       
       if (results.events.length === 0) {
         toast('No events found. Try different search terms.', { icon: '🔍' })
       }
     } catch (error) {
       console.error('Search error:', error)
-      toast.error('Failed to search events. Please try again.')
+      
+      // Update API status based on error type
+      if (error.message.includes('Rate limit exceeded')) {
+        setApiStatus('rate-limited')
+        toast.error('⏱️ Too many API requests. Please wait a few minutes and try again.')
+      } else if (error.message.includes('quota exceeded')) {
+        setApiStatus('rate-limited')
+        toast.error('📊 Daily API quota reached. Using cached results instead.')
+      } else if (error.message.includes('API key invalid')) {
+        setApiStatus('error')
+        toast.error('🔑 API configuration issue. Contact support.')
+      } else {
+        setApiStatus('error')
+        toast.error('🔍 Search temporarily unavailable. Showing sample events instead.')
+      }
       
       // Fallback to mock data if API fails
       if (useApiKey) {
+        console.log('Falling back to mock data due to API error')
         const filteredMockEvents = mockEvents.filter(event => 
-          event.name.toLowerCase().includes(searchParams.query.toLowerCase())
+          event.name.toLowerCase().includes(searchParams.query.toLowerCase()) ||
+          event.venue.toLowerCase().includes(searchParams.query.toLowerCase())
         )
         setSearchResults(filteredMockEvents)
         setTotalPages(1)

@@ -46,7 +46,23 @@ export class TicketmasterAPI {
       const response = await fetch(`${TICKETMASTER_API_BASE}/events.json?${params}`)
       
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        const errorText = await response.text()
+        console.error('Ticketmaster API Error:', {
+          status: response.status,
+          statusText: response.statusText,
+          headers: Object.fromEntries(response.headers.entries()),
+          body: errorText
+        })
+        
+        if (response.status === 429) {
+          throw new Error('Rate limit exceeded. Please try again in a few minutes.')
+        } else if (response.status === 403) {
+          throw new Error('API key invalid or quota exceeded.')
+        } else if (response.status === 400) {
+          throw new Error('Invalid search parameters.')
+        } else {
+          throw new Error(`Ticketmaster API error: ${response.status} - ${response.statusText}`)
+        }
       }
       
       const data = await response.json()
