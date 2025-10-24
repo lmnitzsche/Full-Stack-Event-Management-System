@@ -50,17 +50,23 @@ export default function SearchPage() {
         )
         
         results = {
-          events: response.events.map(event => TicketmasterAPI.transformEvent(event)),
+          events: response.events
+            .map(event => TicketmasterAPI.transformEvent(event))
+            .filter(event => event.url && event.url.trim() !== ''), // Filter out events without URLs
           totalPages: response.totalPages,
           totalElements: response.totalElements
         }
       } else {
         // Use mock data for demo
-        const filteredMockEvents = mockEvents.filter(event => 
-          event.name.toLowerCase().includes(searchParams.query.toLowerCase()) ||
-          event.venue.toLowerCase().includes(searchParams.query.toLowerCase()) ||
-          (event.genre && event.genre.toLowerCase().includes(searchParams.query.toLowerCase()))
-        )
+        const filteredMockEvents = mockEvents.filter(event => {
+          const matchesSearch = event.name.toLowerCase().includes(searchParams.query.toLowerCase()) ||
+            event.venue.toLowerCase().includes(searchParams.query.toLowerCase()) ||
+            (event.genre && event.genre.toLowerCase().includes(searchParams.query.toLowerCase()))
+          
+          const hasValidUrl = event.url && event.url.trim() !== ''
+          
+          return matchesSearch && hasValidUrl
+        })
         
         results = {
           events: filteredMockEvents,
